@@ -44,10 +44,24 @@ function definirMot(){
 
     // on défnit le mot en majuscule afin d'éviter les erreurs de sensibilité à la casse
     mot = mot.toUpperCase()
-
+    str+= "<div class='partie'>"
     for(index = 0; index < mot.length; index++){
-        str+= "<div id='lettre" + index + "' class='lettreADeviner'>_</div>"
+        // Les espaces et les tirets sont autorisés. Cependant, ce ne sont pas des caractères
+        // à trouver. il faut dont les révéler tout de suite.
+        // Ce générateur permet de décomposer un mot s'il est constitué de plusieurs mots.
+        // Ainsi, la 
+        if(mot[index] === " "){
+            str+= "<div id='lettre" + index + "' class='lettreADeviner'></div></div><div class='partie'>"
+        }
+        else if(mot[index] === "-"){
+            str+= "</div><div class='partie'><div id='lettre" + index + "' class='lettreADeviner'>-</div></div><div class='partie'>"
+        }
+        else{
+            str+= "<div id='lettre" + index + "' class='lettreADeviner'>_</div>"
+        }
     }
+    str+= "</div>"
+
     divMot.innerHTML = str
 }
 
