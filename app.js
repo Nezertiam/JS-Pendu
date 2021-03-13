@@ -96,17 +96,27 @@ function testLettre(){
             count++
             // on boucle à nouveau pour voir s'il reste encore des cases non découvertes
             let lettresADeviner = document.querySelectorAll(".lettreADeviner")
+            // toujours réinitialiser cette variable au début. Ce serait dommage de récupérer
+            // la valeur des tests précédents...
             let underscoreCount = 0
+            // On boucle sur la nodeList qui contient toutes les lettres afin de compter
+            // combien sont encore masquées (div possèdant le caractère "_" au lieu de la lettre)
             for(const lettreADeviner of lettresADeviner){
                 if(lettreADeviner.innerHTML == "_"){
                     underscoreCount++
                     console.log(underscoreCount)
                 }
             }
+            // si le compteur d'underscore est toujours supérieur à 0, c'est qu'il
+            // y a toujours une ou plusieurs lettres à trouver. On remet le compteur
+            // à 0 pour la prochaine fois qu'on devra tester s'il reste des lettres à
+            // trouver. Spoiler, c'est au prochain click de l'utilisateur...
             if(underscoreCount !== 0){
                 underscoreCount = 0
             }
             else{
+                // Evidemment, si le compteur = 0, y'a plus de lettre à trouver donc
+                // c'est gagné !
                 console.log(underscoreCount)
                 gameover = 2 // 2 = victoire
                 endgame()
@@ -132,6 +142,7 @@ function testLettre(){
 
 function endgame(){
     elementGameover.classList.remove("dispnone")
+    // on cible la balise p qui contiendra le message de gameover
     let p = document.querySelector("#textGameover")
     if(gameover === 1){
         p.innerHTML = "Perdu ! Le mot à deviner était : <br><br>" + mot + "<br><br><br>Cliquez pour rejouer !"
@@ -142,6 +153,8 @@ function endgame(){
     elementGameover.addEventListener("click", reset)
 }
 
+
+// fonction qui réinitialise les variables et génère un nouveau DOM
 function reset(){
     mot = ""
     nbEchecs = 0
@@ -162,7 +175,7 @@ function reset(){
 // LA FONCTION ULTIME POUR GENERER UN DOM TOUT NEUF !!! I AM GOD !
 // Mouais, après réflexion... modifier l'HTML revient à le faire une deuxième fois ici...
 // sauf s'il y a un écran d'accueil qui n'apparait qu'une fois. Auquel cas, cette fonction serait
-// moins encombrante !
+// moins encombrante ! EDIT : Je crois que je m'en sers bien comme il faut ! Le pendu marche du tonnerre !
 function genererDOM(){
     let str = "<form>"
     str+= "<h1>PENDU JS</h1>"
